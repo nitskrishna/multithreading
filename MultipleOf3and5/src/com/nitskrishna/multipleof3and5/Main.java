@@ -1,4 +1,4 @@
-package com.multipleof3and5;
+package com.nitskrishna.multipleof3and5;
 
 public class Main {
 	public static void main(String[] args) {
