@@ -1,4 +1,4 @@
-package leetcode.h2oreentrantlock;
+package leetcode.h2o.reentrantlock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
