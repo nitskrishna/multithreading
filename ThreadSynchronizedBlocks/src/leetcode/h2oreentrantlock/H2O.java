@@ -1,4 +1,4 @@
-package synchronization.blocks.leetcode.reentrantlock;
+package leetcode.h2oreentrantlock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -62,16 +62,19 @@ class H2O {
 	}
 
 	public void hydrogen(Runnable releaseHydrogen) throws InterruptedException {
-		lock.lock();
-		while (hCount >= 2) {
-			h20Condition.await();
+		try{
+			lock.lock();
+			while (hCount >= 2) {
+				h20Condition.await();
+			}
+			// releaseHydrogen.run() outputs "H". Do not change or remove this line.
+			releaseHydrogen.run();
+			hCount++;
+			createH2O();
+			h20Condition.signalAll();
+		}finally {
+			lock.unlock();
 		}
-		// releaseHydrogen.run() outputs "H". Do not change or remove this line.
-		releaseHydrogen.run();
-		hCount++;
-		createH2O();
-		h20Condition.signalAll();
-		lock.unlock();
 	}
 
 	public void createH2O() {
@@ -83,15 +86,18 @@ class H2O {
 	}
 
 	public void oxygen(Runnable releaseOxygen) throws InterruptedException {
-		lock.lock();
-		while (oCount >= 1) {
-			h20Condition.await();
+		try {
+			lock.lock();
+			while (oCount >= 1) {
+				h20Condition.await();
+			}
+			// releaseOxygen.run() outputs "O". Do not change or remove this line.
+			releaseOxygen.run();
+			oCount++;
+			createH2O();
+			h20Condition.await();	
+		}finally {
+			lock.unlock();
 		}
-		// releaseOxygen.run() outputs "O". Do not change or remove this line.
-		releaseOxygen.run();
-		oCount++;
-		createH2O();
-		h20Condition.await();
-		lock.unlock();
 	}
 }

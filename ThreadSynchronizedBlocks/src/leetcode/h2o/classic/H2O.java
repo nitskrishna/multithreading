@@ -1,4 +1,4 @@
-package synchronization.blocks.leetcode.classic;
+package leetcode.h2o.classic;
 
 /**
  * URL : https://leetcode.com/problems/building-h2o/
@@ -56,9 +56,11 @@ class H2O {
 	public H2O() {
 
 	}
-
+	 
 	public void hydrogen(Runnable releaseHydrogen) throws InterruptedException {
+		//t1,t3 : Blocked
 		synchronized (lock) {
+			//t2--> runnable, 
 			while (hCount >= 2) {
 				lock.wait();
 			}
@@ -67,14 +69,6 @@ class H2O {
 			hCount++;
 			createH2O();
 			lock.notifyAll();
-		}
-	}
-
-	public void createH2O() {
-		while (hCount >= 2 && oCount >= 1) {
-			hCount--;
-			hCount--;
-			oCount--;
 		}
 	}
 
@@ -88,6 +82,15 @@ class H2O {
 			oCount++;
 			createH2O();
 			lock.notifyAll();
+		}
+	}
+	
+	public void createH2O() {
+		
+		while (hCount >= 2 && oCount >= 1) {
+			hCount--;
+			hCount--;
+			oCount--;
 		}
 	}
 }
