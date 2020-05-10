@@ -10,12 +10,12 @@ import java.util.Stack;
  *
  */
 public class Queue {
-	
+
 	private Stack<Integer> addStack = new Stack<>();
 	private Stack<Integer> removeStack = new Stack<>();
 	private final Object addLock = new Object();
 	private final Object removeLock = new Object();
-	
+
 	public void enqueue(int item) {
 		synchronized (addLock) {
 			addStack.push(item);
@@ -23,7 +23,7 @@ public class Queue {
 		}
 	}
 
-	public int dequeue(){
+	public int dequeue() {
 		int value = 0;
 		synchronized (removeLock) {
 			if (removeStack.isEmpty()) {
@@ -36,11 +36,12 @@ public class Queue {
 							removeStack.push(addStack.pop());
 						}
 					}
-				}catch(InterruptedException e) {
-					
+				} catch (InterruptedException e) {
+					// code for logging the exception
 				}
 			}
-			value = removeStack.pop();
+			value = removeStack.pop(); // within synchronized block is needed so as if other thread already removed an
+										// element same is not removed again
 		}
 		return value;
 	}
