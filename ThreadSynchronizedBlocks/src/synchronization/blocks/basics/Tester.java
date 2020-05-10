@@ -1,4 +1,4 @@
-package synchronization.blocks;
+package synchronization.blocks.basics;
 
 /**
  * 
